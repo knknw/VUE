@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="切换" @click="flg = !flg">
+        <h3 v-if ="flg">多情总被无情伤</h3>
+    </div>
+    <script>
+        let  vm =new Vue({
+            el:'#app',
+            data:{
+                flg:false
+            },
+            nethods:{
+
+            }
+        })
+    
+    
+    </script>
+</body>
+</html>                                                                                 

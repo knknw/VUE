@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <log></log> 
+
+
+    </div>
+    <template id="cv">
+         <h3>这是创建的私有组件 sd</h3>
+    </template>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{},
+            methods:{},
+            components:{ //定义创建私有组件
+                log:{
+                    // template:'<h3>这是创建的私有组件</h3>'
+                    template:"#cv"
+                },
+                data(){
+                    
+                },
+                methods: {
+                    
+                },
+
+            } 
+        })
+    
+    
+    
+    
+    </script>
+</body>
+</html>

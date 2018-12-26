@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
+
+</head>
+<body>
+    <div id="app">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <div class="panel-body form-inline">
+             <label >
+                 Id:
+                 <input type="text" class="form-control" v-model='id'>
+             </label>
+             <label>
+                 Name:
+                 <input type="text " class="form-control" v-model='name'>
+             </label>
+             <input type="button" class="btn btn-primary"  value="添加" @click = 'add'>
+
+            <label >
+                搜索名称关键字:
+                <input type="text" class="form-control" v-model='keywrod' >
+            </label>
+            </div>
+          </div>
+          <table class="table table-bordered table-hover table-striped">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Ctime</th>
+                    <th>Operation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- 之前， v-for 中的数据，都是直接从 data 上的list中直接渲染过来的 -->
+                  <!-- 现在， 我们自定义了一个 search 方法，同时，把 所有的关键字，通过传参的形式，传递给了 search 方法 -->
+                  <!-- 在 search 方法内部，通过 执行 for 循环， 把所有符合 搜索关键字的数据，保存到 一个新数组中，返回 -->
+            
+                <!-- search()方法中会return一个通过关键字筛选后的数组,然后把这个数组中的数据渲染到
+                页面中,如果没有输入关键字就是就会选择全部的数据然后渲染 -->
+                  <tr v-for='item in search()' :key="item.id">
+                    <td>{{item.id}}</td>
+                    <td >{{item.name}}</td>
+                    <td>{{item.ctime |scrty('') }}</td>
+                    <td>
+                      <a href="" @click.prevent="del(item.id)">删除</a>
+                    </td>
+                  </tr>
+                </tbody>
+             </table>
+    </div>
+
+
+    <script>
+         Vue.filter('scrty',(dataintm,pasder='')=>{
+             //Vue中的pasder='' 是设置默认值相当于 pasder = pasder|| ""
+             var dt = new Date(dataintm)
+             var y = dt.getFullYear()
+             var m = dt.getMonth()+1
+             var d = dt.getDate()
+             //return y+'-'+ m +'-' +d
+             
+             if(pasder.toLowerCase()==='yyyy-mm-dd'){
+                 return `${y}-${m}-${d}`
+             }else{
+                 var hh =dt.getHours()
+                 var mm =dt.getMinutes()
+                 var ss = dt.getSeconds()
+                 return `${y}-${m}-${d} ${hh}-${mm}-${ss} `
+             }
+         })
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                id:'',
+                name:'',
+                keywrod:'',//搜索关键字
+                list:[
+                    {id: 1, name:'奔驰', ctime: new Date()},
+                    {id:2,name:'宝马',ctime:new Date()},
+                    {id:3,name:'凯迪拉克',ctime:new Date()}
+                ]
+            },
+            methods:{
+                //添加
+                add(){
+                    //添加思想:
+                        //1.先获取输入输入的数据,使用v-model来双向获取
+                        //2.v-model会动态实时的把输入框的数据传送到data定义的属性里
+                        //3.新建一个对象,用来接收每次动态获取的值,然后添加到定义的数组里list
+                        //4.使用v-for动态渲染list中的数据
+                    var car = {id:this.id,name:this.name,ctime:new Date()}
+                    this.list.push(car)
+                    this.id = this.name = ''
+                },
+                //删除
+                del(id){
+                    //console.log(id)
+                    //删除思想:
+                        //1.先获取点击删除的数据的id,vue中可以使用事件传参的方式
+                        //2.根据id来删除list数组中药删除的数据
+                    // this.list.forEach((item, i) =>{
+                    //     if(id ===item.id){
+                    //         this.list.splice(i,1)
+                             //splice中i是从哪里开始删除,1是删除一项
+                    //     }
+                    // })
+                    //some 方法当回调函数return true 时就立马结束循环
+                    // this.list.some((item,i)=>{
+                    //     if(item.id===id) {
+                    //         this.list.splice(i,1)
+                    //         return  true;
+                    //     }
+                    // })
+
+                    //findIndex return true 表示找到元素,会立即停止循环
+                    //同时findIdex的 返回值就是找到的元素的索引号
+                    let i = this.list.findIndex(item =>{
+                        // if(item.id===id){
+                        //     return true 
+                        // }
+                        //以上代码可间写成
+                        return item.id==id
+                    })
+                    this.list.splice(i,1)
+                },
+                //根据关键字进行搜索
+                search(){
+                    //关键字搜索思想
+                    //1,获取输入框的关键字
+                    //2,根据获取的关键字,遍历data中每一项数据然后对比是不有包含这些关键字的
+                    // var newlist = [] //用于接收通过关键字得到的数组
+                    // this.list.forEach(item=>{
+                    //     if(item.name.indexOf(this.keywrod.trim())!=-1 || item.id ==this.keywrod.trim()){
+                    //         newlist.push(item);
+                    //     }        
+                    // })
+                    // console.log(newlist)
+                    // return newlist
+
+                //   return  this.list.filter(item => {
+                //         if(item.name.includes(this.keywrod)){
+                //             return item
+                //         }
+                //     })
+                // 去除空格
+                return this.list.filter(item => item.name.includes(this.keywrod.trim()))
+                }
+
+            },
+
+        })
+    
+    
+    </script>
+</body>
+</html>

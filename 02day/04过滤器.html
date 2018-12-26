@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+       <p>{{msg | msgg('可爱','吧')}}</p>
+    </div>
+    <div id="app2">
+        <p>{{msg | mss('安','好')}}</p>
+    </div>
+    <script>
+        //过滤器的回调函数可以传递多个参数,但是第一个参数是固定的就是管道符左侧的数据
+        Vue.filter('msgg',function(msg,sd,sf){
+           return msg.replace(/哪吒/g,sd+sf)
+        })
+        var vm =new Vue({
+            el:'#app',
+            data:{
+                msg:'是他,是他,就是他,我们的哪吒小哪吒!'
+            }
+        })
+    //局部过滤器
+    var vm2 = new Vue({
+        el:'#app2',
+        data:{
+            msg:'如若相爱,便生死相依,如若不爱,便护她安好,哈哈哈哈哈哈!'
+        },
+        filters:{
+            mss(msg,df,sf){
+                return msg.replace(/哈/g,df+sf)
+            }
+        }
+    })
+    </script>
+</body>
+</html>

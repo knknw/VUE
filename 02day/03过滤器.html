@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 第一个 参数是data数据中实例对象,第二个参数是创建的全局过滤器名称 -->
+        <p>{{msg |dtl("罢了") }}</p>
+    </div>
+    <script>
+        Vue.filter('dtl',(msg,df)=>{
+          return  msg.replace(/算了/g,df)
+        })
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                msg:"算了,算了,算了,罢了,罢了,罢了,都是浮云"
+            }
+
+        })
+    
+    
+    </script>
+</body>
+</html>

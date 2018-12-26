@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <mycoml></mycoml>
+        <mycoml2></mycoml2>
+        <mycoml3></mycoml3>
+    </div>
+    <div id="app2" style="color:aqua">
+            <mycoml></mycoml>
+    </div>
+    <template id="ppl">
+        <div>  <!--template模板渲染多个标签的时候必须用一个根元素包裹 -->
+            <h3>第三种</h3>
+            <p>这是第三种方法创建组件</p>
+        </div>
+    </template>
+    <script>
+        //第一种方法,使用Vue.extend来创建全局组件
+            //1定义一个组件模板
+        var coml = Vue.extend({
+            template:'<h3>这是使用Vue.extend 创建的组件</h3>'
+        })
+        Vue.component('mycoml',coml)
+
+        //第二种方法创建组件
+            //template只能有一个跟元素所以有多个标签时要用一个根元素包裹
+        Vue.component('mycoml2',
+            {template:"<div><p>第二种</p><h3>这是第二种方法在 创建的组件</h3></div>"}
+        )
+
+
+        //第三种方法创建组件
+            Vue.component('mycoml3', {template:'#ppl'})
+
+
+
+    
+    
+        var vm =new Vue({
+            el:'#app',
+            data:{},
+            methods:{}
+        })
+
+        var vm2 =new Vue({
+            el:'#app2',
+            data:{},
+            methods:{}
+        })
+
+
+    
+    </script>
+</body>
+</html>
