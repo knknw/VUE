@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="lib/vue-2.4.0.js"></script>
+</head>
+<style>
+     .red {
+      color: red;
+    }
+
+    .thin {
+      font-weight: 200;
+    }
+    .yellow{
+        color: yellow;
+    }
+    .als{
+        color: aqua;
+    }
+
+
+
+</style>
+<body>
+    <div id="app">
+        <!-- 一,原生的方法 -->
+        <p class="red"> 我本将心照明月</p>
+        <!-- 二,v-bind绑定data中属性 -->
+        <p :class=" classArr"> 无奈明月照阴沟</p>
+        <!-- 三,在数组中使用,三元表达式 -->
+        <p :class="['thin' ,flag?'yellow':'']">王炜是个大傻子</p>
+        <!-- 四,在数组中使用,对象来替代三元表达式 -->
+        <p :class="['red','thin',{als:flag}]">可惜啊,可惜,我的真心付错了人</p>
+        <!-- 五,直接传递一个数组 -->
+        <p :class="['yellow','thin']">一腔痴情换来你的绝情</p>
+        <!-- 六,使用v-bind绑定对象 -->
+        <p :class="classObj">忘了吧,忘了吧</p>
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el:"#app",
+            data:{        
+                flag:true,
+                classArr:['red','thin'],
+                classyel:['yellow','thin'],
+                classala:['als','thin'],
+                classObj: { red: true, thin: true,  yellow: false }
+               
+            }
+        })
+    
+    
+    </script>
+</body>
+</html>

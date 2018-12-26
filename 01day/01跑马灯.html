@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h3> {{msg}}</h3>
+        <input type="button" value="开始" v-on:click='show'>
+        <input type="button" value="停止" @click="noshow">
+        <p v-text='msg2'></p>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data:{
+                msg:'跑马灯',
+                msg2:'九块九你买不了吃亏,买不了上当',
+                timerId: null
+            },
+            methods:{
+                show (){
+                    this.timerId = setInterval(()=>{
+                    //切头
+                    let start = this.msg2.substr(0,1)
+                    //切尾
+                    let end = this.msg2.substr(1)
+                    this.msg2 = end + start
+                  },200)
+                },
+                noshow(){
+                   clearInterval(this.timerId)
+                   //每次清除了定是器之后需要从新把timerId设置为空
+                   this.timerId = null;
+                }
+            }
+        })
+        
+    </script>
+</body>
+</html>

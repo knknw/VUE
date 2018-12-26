@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="toggle" @click= "falg=!falg">
+        <p v-if='falg'>他日若展凌云志</p>
+        <p v-show=" falg">敢笑黄巢不丈夫</p>
+    </div>
+    <script>    
+        var vm = new Vue({
+            el:'#app',
+            data:{
+               falg:false
+            },
+            // methods:{
+            //     toggle(){
+            //         this.falg = !this.falg
+            //     }
+            // }
+        })
+    
+    
+    
+    </script>
+</body>
+</html>
