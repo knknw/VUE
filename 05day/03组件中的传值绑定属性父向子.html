@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+            <!-- 点击更改父组件的数据 -->
+        <input type="button" value="修改父组件的数据" @click="msg = '父组件的数据修改'">
+            <!-- 渲染子组件,并绑定属性值是父组件数据的属性 parentmsg  -->
+        <coml :parentmsg = "msg"></coml>
+    </div>
+    <script>
+        //定义子组件的模板
+        // var sonk = {
+        //     template:'<h1 @click="change">这是子组件 --- {{ parentmsg.content }}</h1>',
+        // }
+        //new 一个vm实例,其实也是父组件
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'我是父组件数据'
+            },
+            methods:{},
+            components:{
+                coml:{
+                    data(){//data上的数据是可度可写的.所有的子组件data中的数据都是自身拥有的 比如： 子组件通过 
+                    //Ajax ，请求回来的数据，都可以放到 data 身上；而不是父组件传递来的,
+                    //父组件传递的数据都只会放在props中,
+                   return {
+                       sonmsg:'我是子组件的数据'
+                     }
+                    },
+                    //props 中的数据都是只读的,不能修改
+                        //组件中所有的props中的数据都是通过 父组件向子组件传递的
+                    props:['parentmsg'] ,//接收存放父组件通过属性绑定传递过来的数据
+                    template:'<h1 @click="change">子:{{sonmsg}} ---父: {{ parentmsg }}</h1>',
+                   methods: {
+                       change(){
+                           this.parentmsg = '被修改了'
+                       }
+                   },
+                }
+            }
+              
+        })
+    
+    
+    </script>
+</body>
+</html>

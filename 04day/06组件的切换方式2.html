@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <a href="" @click.prevent="flag='login'">登录</a>
+        <a href="" @click.prevent="flag='register'">注册</a>
+        <!-- vue中提供了<component></component>用来展示对应名称的组件 -->
+        <!-- component是一个占位符 ,is属性可以用来指定要展示的组件的名称 -->
+        <component :is="flag"></component>
+    </div>
+    <template id="log">
+       <h3>请登录</h3>
+    </template>
+    <template id="resu">
+       <h3>请注册</h3>
+    </template>
+    <script>
+        Vue.component('login', {
+            template: '#log'
+        })
+
+        Vue.component('register', {
+            template: '#resu'
+        })
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                flag: 'login' //前档component 中 is绑定的组件名称
+            },
+            methods: {}
+        })
+    </script>
+</body>
+
+</html>

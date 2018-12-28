@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+            <mycoml :parentmsg= 'msg' @funcv='show'></mycoml>
+    </div>
+    <script>
+        //定义子组件的模板
+        var coml = {
+            template: '<h3 @click="sonclick">子:{{sonmsg}} >>>>>> 父:{{parentmsg}} </h3>',
+            data() {
+                //数据
+                return {
+                    sonmsg: '我是$$ 子 $$组件中的数据'
+                }
+            },
+            props:['parentmsg'], //props是个数组
+            methods: {
+                //方法函数
+                    //当点击子组件的 数据按钮时候 就会把子组件的数据通过实参的方式传递给绑定的父组件的方法中
+                    //这样 父组件通过这个方法的形参 就可以获取到子组件的数据
+                sonclick(){
+                    //$emit 是获取到子组件绑定的父组件的方法 ,并把子组件的数据当做实参
+                    //传递到父子间的函数中 
+                    this.$emit('funcv',this.sonmsg)
+                }
+            },
+            
+        }
+        
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '我是 @@  父  @@组件中的数据'
+            },
+            methods: {
+                show(data){
+                    this.msg =  data 
+                }
+            },
+            components: { //创建子组件
+                mycoml :coml,
+                
+            }
+        })
+    </script>
+</body>
+
+</html>

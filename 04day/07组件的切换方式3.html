@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <!-- prevent 取消a链接的默认跳转行为 -->
+        <a href="" @click.prevent="gron='login'">登录</a>
+        <a href="" @click.prevent="gron = 'resd'">注册</a>
+        <component :is="gron"></component>
+    </div>
+    <script>
+        Vue.component('login',
+            {template:"<h3>请登录</h3>"})
+        Vue.component('resd',{
+            template:'<h3>请注册</h3>'
+        })
+        var  vm = new Vue({
+            el:'#app',
+            data:{
+                gron :'login'
+            },
+           methods: {
+               
+           },
+        })
+    
+    </script>
+</body>
+</html>

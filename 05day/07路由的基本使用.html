@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <!-- 1. 引入 vue-router 路由模块 -->
+    <script src="./lib/vue-router-3.0.1.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 路由中第定义的标签用,默认会渲染成a链接
+            <a href="#/login">登录</a>  -->
+        <router-link  to='login' tag = 'span'>登录</router-link>
+        
+        <router-link to="register" >注册</router-link>
+        <!-- 路由中定义的标签用来渲染对应得模板 -->
+        <router-view></router-view>
+
+    </div>
+    <script>
+        //组件模板
+        var login = {
+            template:'<h1>登录组件</h1>'
+        }
+        var register = {
+            template:'<h1>注册组件</h1>'
+        }
+        var router = new VueRouter({
+            routes:[
+                // redirect是用来加载默认显示的组件的
+                {path:'/',redirect:'/login'},
+                //这个表达式的意思,当url地址切换为/login时,模板就渲染成定义的登录组件
+                {path:'/login',component:login},
+                {path:'/register',component:register}
+            ]   
+        })
+        var vm =new Vue({
+            el:'#app',
+            data:{},
+            methods:{},
+            router:router//将路由挂载到实例对象上 , 用来监听url路径改变,展示对应相应的组件
+                    // 前一个router是属性名不可改变 挂载路由的,后一个是属性值,是定义的路由的名字
+        })
+    </script>
+</body>
+</html>
