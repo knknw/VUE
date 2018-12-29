@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,83 @@
     <script src="./lib/vue-2.4.0.js"></script>
     <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
 </head>
+
 <body>
-    
+    <div id="app">
+        <comlbox @func='loadcom'></comlbox>
+        <ul class="list-group">
+          <li class="list-group-item" v-for="item in list">
+                <span class="badge">评论人:{{item.user}} </span>
+                {{item.content}}
+          </li>
+        </ul>
+    </div>
+    <template id="tml">
+        <div>
+            <div class="form-group">
+                <label>评论人:</label>
+                <input type="text" class="form-control" v-model='usrname'>
+            </div>
+            <div class="form-group">
+                <label>评论内容：</label>
+                <textarea class="form-control"  v-model = 'txetr'></textarea>
+            </div>
+
+            <div class="form-group">
+                <input type="button" value="发表评论" class="btn btn-primary"  @click = 'show'>
+            </div>
+        </div>
+    </template>
+    <script>
+        //子组件 
+        var coml = {
+            template: '#tml',
+            data(){
+                return {
+                    usrname:'',
+                    txetr:'',
+                }
+            },
+           methods: {
+               show(){
+                   var comment= {id:Date.now(),user:this.usrname,content:this.txetr }
+                   //JSON.parse()是将字符串转化成数组
+                   var list = JSON.parse(localStorage.getItem('cmts') || '[]')
+                    //将新获取的数据从数据的最前面添加
+                   list.unshift(comment)
+                   //将数据 保存到localStorage中
+                        //JSON.stringify将数组转化成字符串
+                    localStorage.setItem('cmts',JSON.stringify(list))
+                  
+                    this. usrname = this.txetr = ''
+                    this.$emit('func')
+               } 
+           },
+        }
+        //实例父组件
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list:[
+                        {id:Date.now(),user:'李白',content: '天生我材必有用'} 
+                    ]
+            },
+            created(){
+                this.loadcom()
+            },
+            methods: {
+                loadcom(){
+                    //获取储存到localSStorage 中的数据然后赋值给父组件中data中的数据
+                    var list =  JSON.parse(localStorage.getItem('cmts') || '[]')
+                    //localStorage.removeItem('cmts')
+                        this.list = list
+                }
+            },
+            components: {
+                'comlbox': coml
+            }
+        })
+    </script>
 </body>
+
 </html>
